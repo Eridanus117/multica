@@ -54,6 +54,22 @@ make selfhost
 
 `make selfhost` automatically creates `.env` from the example, generates a random `JWT_SECRET`, and starts all services via Docker Compose.
 
+If Docker builds are slow because Alpine package installs time out, set `ALPINE_MIRROR` in `.env` before running `make selfhost`. Example:
+
+```bash
+ALPINE_MIRROR=https://mirrors.aliyun.com/alpine
+```
+
+If you use a local HTTP proxy, set `DOCKER_HTTP_PROXY` / `DOCKER_HTTPS_PROXY` / `DOCKER_ALL_PROXY` in `.env`. These names intentionally avoid colliding with your shell's own `HTTP_PROXY` variables, because Docker Compose otherwise prefers the shell value over `.env`. For Docker builds, do not use `127.0.0.1` unless the proxy actually runs inside the container namespace; use a host-reachable address instead.
+
+For upgrades on a customized local setup, prefer:
+
+```bash
+bash scripts/selfhost-upgrade.sh
+```
+
+This keeps the official self-host path (`docker compose ... up -d --build`) while also reconnecting the local daemon with your configured `MULTICA_CLAUDE_PATH`.
+
 Once ready:
 
 - **Frontend:** http://localhost:3000

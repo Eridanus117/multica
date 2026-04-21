@@ -1,6 +1,14 @@
 # --- Dependencies ---
 FROM node:22-alpine AS deps
 
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG ALL_PROXY
+ARG NO_PROXY
+ARG http_proxy
+ARG https_proxy
+ARG all_proxy
+ARG no_proxy
 RUN corepack enable && corepack prepare pnpm@10.28.2 --activate
 
 WORKDIR /app
@@ -19,6 +27,14 @@ RUN pnpm install --frozen-lockfile
 # --- Build ---
 FROM node:22-alpine AS builder
 
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG ALL_PROXY
+ARG NO_PROXY
+ARG http_proxy
+ARG https_proxy
+ARG all_proxy
+ARG no_proxy
 RUN corepack enable && corepack prepare pnpm@10.28.2 --activate
 
 WORKDIR /app
@@ -49,6 +65,14 @@ RUN pnpm --filter @multica/web build
 # --- Runtime ---
 FROM node:22-alpine AS runner
 
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG ALL_PROXY
+ARG NO_PROXY
+ARG http_proxy
+ARG https_proxy
+ARG all_proxy
+ARG no_proxy
 WORKDIR /app
 
 ENV NODE_ENV=production

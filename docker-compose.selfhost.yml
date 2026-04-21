@@ -32,6 +32,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        ALPINE_MIRROR: ${ALPINE_MIRROR:-}
+        HTTP_PROXY: ${DOCKER_HTTP_PROXY:-}
+        HTTPS_PROXY: ${DOCKER_HTTPS_PROXY:-}
+        ALL_PROXY: ${DOCKER_ALL_PROXY:-}
+        NO_PROXY: ${DOCKER_NO_PROXY:-}
+        http_proxy: ${DOCKER_HTTP_PROXY:-}
+        https_proxy: ${DOCKER_HTTPS_PROXY:-}
+        all_proxy: ${DOCKER_ALL_PROXY:-}
+        no_proxy: ${DOCKER_NO_PROXY:-}
     depends_on:
       postgres:
         condition: service_healthy
@@ -68,6 +78,14 @@ services:
         REMOTE_API_URL: http://backend:8080
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}
         NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-}
+        HTTP_PROXY: ${DOCKER_HTTP_PROXY:-}
+        HTTPS_PROXY: ${DOCKER_HTTPS_PROXY:-}
+        ALL_PROXY: ${DOCKER_ALL_PROXY:-}
+        NO_PROXY: ${DOCKER_NO_PROXY:-}
+        http_proxy: ${DOCKER_HTTP_PROXY:-}
+        https_proxy: ${DOCKER_HTTPS_PROXY:-}
+        all_proxy: ${DOCKER_ALL_PROXY:-}
+        no_proxy: ${DOCKER_NO_PROXY:-}
     depends_on:
       - backend
     ports:
